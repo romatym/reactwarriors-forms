@@ -7,7 +7,8 @@ export default class App extends React.Component {
     this.state = {
       username: "",
       password: "",
-      repeatPassword: ""
+      repeatPassword: "",
+      gender: "male"
     };
   }
   onChange = (event) => {
@@ -86,6 +87,29 @@ export default class App extends React.Component {
               {this.getOptionItems(countries)}
             </select>
           </div>
+          <fieldset className="form-group">
+            <div>Gender</div>
+            <div className="form-check">
+              <input
+                className="form-check-input" 
+                type="radio" 
+                name="gender" 
+                id="male" 
+                value="male"
+                checked={this.state.gender === "male"}
+                //defaultChecked
+                ></input>
+              <label className="form-check-label" htmlFor="exampleRadios1">
+                Default radio
+              </label>
+            </div>
+            <div className="form-check">
+              <input className="form-check-input" type="radio" name="gender" id="female" value="female"></input>
+              <label className="form-check-label" htmlFor="exampleRadios2">
+                Second default radio
+            </label>
+            </div>
+          </fieldset>
 
           <button type="submit" className="btn btn-primary w-100"
             onChange={this.onChange}
