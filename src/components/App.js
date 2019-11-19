@@ -10,7 +10,8 @@ export default class App extends React.Component {
       repeatPassword: "",
       country: "1",
       gender: "male",
-      agree: true
+      agree: true,
+      avatar: ""
     };
   }
   onChange = (event) => {
@@ -30,6 +31,19 @@ export default class App extends React.Component {
       //[event.target.name]: !event.target.value
     });
   }
+
+  onChangeAvatar = event => {
+    const reader = new FileReader();
+    reader.onload = event => {
+      this.setState({
+        avatar: event.target.result
+      })
+      console.log("result", event.target.result);
+    };
+
+    reader.readAsDataURL(event.target.files[0]);
+  };
+
   onChangeOld = (event) => {
     event.preventDefault();
     console.log(this.username.value);
@@ -129,7 +143,18 @@ export default class App extends React.Component {
             </label>
             </div>
           </fieldset>
-          <div class="form-check">
+          <div className="form-group">
+            <label htmlFor="avatar">Avatar</label>
+            <input
+              className="form-control-file"
+              type="file"
+              id="avatar"
+              name="avatar"
+              //value={this.state.avatar}
+              onChange={this.onChangeAvatar}
+            ></input>
+          </div>
+          <div className="form-check">
             <input
               className="form-check-input"
               type="checkbox"
@@ -139,7 +164,7 @@ export default class App extends React.Component {
               onChange={this.onChangeAgree}
             ></input>
             <label className="form-check-label" htmlFor="Agree">
-              Agree
+              Confirm the processing of data
             </label>
           </div>
           <button type="submit" className="btn btn-primary w-100"
