@@ -8,15 +8,26 @@ export default class App extends React.Component {
       username: "",
       password: "",
       repeatPassword: "",
-      gender: "male"
+      country: "1",
+      gender: "male",
+      agree: true
     };
   }
   onChange = (event) => {
-    event.preventDefault();
-    console.log(event.target.name, event.target.value);
+    //event.preventDefault();
+    console.log(event.target.name, event.target.value, event.target.checked);
     // console.log(event.target.name);
     this.setState({
       [event.target.name]: event.target.value
+    });
+  }
+  onChangeAgree = (event) => {
+    //event.preventDefault();
+    console.log(event.target.name, event.target.value, event.target.checked);
+    // console.log(event.target.name);
+    this.setState({
+      [event.target.name]: event.target.checked
+      //[event.target.name]: !event.target.value
     });
   }
   onChangeOld = (event) => {
@@ -91,26 +102,46 @@ export default class App extends React.Component {
             <div>Gender</div>
             <div className="form-check">
               <input
-                className="form-check-input" 
-                type="radio" 
-                name="gender" 
-                id="male" 
+                className="form-check-input"
+                type="radio"
+                name="gender"
+                id="male"
                 value="male"
                 checked={this.state.gender === "male"}
                 //defaultChecked
-                ></input>
+                onChange={this.onChange}
+              ></input>
               <label className="form-check-label" htmlFor="exampleRadios1">
-                Default radio
+                Male
               </label>
             </div>
             <div className="form-check">
-              <input className="form-check-input" type="radio" name="gender" id="female" value="female"></input>
+              <input
+                className="form-check-input"
+                type="radio"
+                name="gender"
+                id="female"
+                value="female"
+                onChange={this.onChange}
+              ></input>
               <label className="form-check-label" htmlFor="exampleRadios2">
-                Second default radio
+                Female
             </label>
             </div>
           </fieldset>
-
+          <div class="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id="agree"
+              name="agree"
+              value={this.state.agree}
+              onChange={this.onChangeAgree}
+            ></input>
+            <label className="form-check-label" htmlFor="Agree">
+              Agree
+            </label>
+          </div>
           <button type="submit" className="btn btn-primary w-100"
             onChange={this.onChange}
           >
