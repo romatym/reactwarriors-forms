@@ -11,9 +11,46 @@ export default class App extends React.Component {
       country: "1",
       gender: "male",
       agree: true,
-      avatar: ""
+      avatar: "",
+      errors: {
+        username: false,
+        password: false,
+        repeatPassword: false
+      }
     };
   }
+
+  onSubmit = (event) => {
+
+    event.preventDefault();
+
+    console.log("submit");
+    const errors = {};
+
+    if (this.state.username.length < 5) {
+      errors.username = "Must be at least 5 characters long";
+    }
+    if (this.state.password.length < 3) {
+      errors.password = "Password required";
+    }
+    if (this.state.repeatPassword !== this.state.password) {
+      errors.repeatPassword = "not equal";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      this.setState({
+        errors: errors
+      })
+    } else {
+      this.setState({
+        errors: {}
+      })
+
+      console.log("submit", this.state);
+    }
+
+  }
+
   onChange = (event) => {
     //event.preventDefault();
     console.log(event.target.name, event.target.value, event.target.checked);
@@ -22,6 +59,7 @@ export default class App extends React.Component {
       [event.target.name]: event.target.value
     });
   }
+
   onChangeAgree = (event) => {
     //event.preventDefault();
     console.log(event.target.name, event.target.value, event.target.checked);
@@ -40,7 +78,6 @@ export default class App extends React.Component {
       })
       console.log("result", event.target.result);
     };
-
     reader.readAsDataURL(event.target.files[0]);
   };
 
@@ -58,7 +95,6 @@ export default class App extends React.Component {
   }
 
   render() {
-
     //console.log(this);
 
     return (
@@ -75,6 +111,9 @@ export default class App extends React.Component {
               name="username"
               onChange={this.onChange}
             />
+            {this.state.errors.username ? (
+              <div className="invalid-feedback">{this.state.errors.username}</div>
+            ) : null}
           </div>
           <div className="form-group">
             <label>Password</label>
@@ -87,6 +126,9 @@ export default class App extends React.Component {
               name="password"
               onChange={this.onChange}
             />
+            {this.state.errors.password ? (
+              <div className="invalid-feedback">this.state.errors.password</div>
+            ) : null}
           </div>
           <div className="form-group">
             <label>Repeat password</label>
@@ -99,6 +141,9 @@ export default class App extends React.Component {
               name="repeatPassword"
               onChange={this.onChange}
             />
+            {this.state.errors.repeatPassword ? (
+              <div className="invalid-feedback">this.state.errors.repeatPassword</div>
+            ) : null}
           </div>
           <div className="form-group">
             <label htmlFor="country">Country</label>
@@ -167,8 +212,11 @@ export default class App extends React.Component {
               Confirm the processing of data
             </label>
           </div>
-          <button type="submit" className="btn btn-primary w-100"
-            onChange={this.onChange}
+          <button
+            type="submit"
+            className="btn btn-primary w-100"
+            //onSubmit={this.onSubmit}
+            onClick={this.onSubmit}
           >
             Submit
           </button>
